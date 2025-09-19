@@ -3,16 +3,9 @@
 :root {
   --background: #f9fafb;
   --foreground: #111827;
-  --primary: "#2563eb";
-  --secondary: "#10B981";
-  --accent: "#f59e0b";
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --primary: #2563eb;
+  --secondary: #10b981;
+  --accent: #f59e0b;
 }
 
 body {
