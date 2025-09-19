@@ -1,3 +1,4 @@
+// components/Footer.tsx
 import Link from "next/link";
 import { FaTwitterSquare } from "react-icons/fa";
 import { FaLinkedin } from "react-icons/fa6";
