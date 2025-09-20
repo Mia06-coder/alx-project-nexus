@@ -11,3 +11,9 @@ export interface ButtonProps {
   disabled?: boolean;
   className?: string;
 }
+
+export interface CarouselProps {
+  title: string;
+  ariaLabel: string;
+  children: React.ReactNode;
+}
