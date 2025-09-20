@@ -1,6 +1,6 @@
 // components/Carousel.tsx
 import { CarouselProps } from "@/interfaces";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
 export default function Carousel({
@@ -9,12 +9,35 @@ export default function Carousel({
   children,
 }: CarouselProps) {
   const scrollRef = useRef<HTMLUListElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
 
+  const updateScrollState = () => {
+    if (!scrollRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+
+    setCanScrollLeft(scrollLeft > 0);
+    setCanScrollRight(scrollLeft + clientWidth < scrollWidth);
+  };
   const scroll = (direction: "left" | "right") => {
     if (!scrollRef.current) return;
     const scrollAmount = direction === "left" ? -300 : 300;
     scrollRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
   };
+
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (!container) return;
+
+    updateScrollState(); // initial state
+    container.addEventListener("scroll", updateScrollState);
+    window.addEventListener("resize", updateScrollState);
+
+    return () => {
+      container.removeEventListener("scroll", updateScrollState);
+      window.removeEventListener("resize", updateScrollState);
+    };
+  }, []);
 
   return (
     <section
@@ -31,7 +54,13 @@ export default function Carousel({
       {/* Arrows */}
       <button
         onClick={() => scroll("left")}
-        className="absolute hidden sm:block -left-6 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black text-white shadow-md rounded-full p-2 z-15 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--primary)]"
+        disabled={!canScrollLeft}
+        aria-disabled={!canScrollLeft}
+        className={`absolute hidden sm:block -left-6 top-1/2 -translate-y-1/2 rounded-full p-2 z-15 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--primary)] ${
+          canScrollLeft
+            ? "bg-black/60 hover:bg-black text-white shadow-md"
+            : "bg-gray-300 text-gray-500 cursor-not-allowed opacity-50"
+        }`}
         aria-label={`Scroll left`}
       >
         <FaChevronLeft aria-hidden="true" />
@@ -39,7 +68,13 @@ export default function Carousel({
 
       <button
         onClick={() => scroll("right")}
-        className="absolute hidden sm:block -right-6 top-1/2 -translate-y-1/2 bg-black/60 hover:bg-black text-white shadow-md rounded-full p-2 z-15 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--primary)]"
+        disabled={!canScrollRight}
+        aria-disabled={!canScrollRight}
+        className={`absolute hidden sm:block -right-6 top-1/2 -translate-y-1/2 rounded-full p-2 z-15 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--primary)] ${
+          canScrollRight
+            ? "bg-black/60 hover:bg-black text-white shadow-md"
+            : "bg-gray-300 text-gray-500 cursor-not-allowed opacity-50"
+        }`}
         aria-label={`Scroll right`}
       >
         <FaChevronRight aria-hidden="true" />

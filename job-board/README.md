@@ -4,21 +4,24 @@ An interactive job board platform built with **Next.js**, **Tailwind CSS**, and 
 
 The platform connects **job seekers** with **employers**, offering an accessible, responsive, and user-friendly experience.
 
+![Landing Page](/job-board/public/assets/images/screenshots/landing.png)
+
 ---
 
 ## Features
 
-- Job listings with search & filters
-- Employer and job seeker dashboards
-- Mobile-first responsive design
-- Modern UI with custom typography and color scheme
-- API routes for data handling
+- Responsive header with navigation, notifications, and user menu
+- Responsive footer with branding, social links, and designer credits
+- Reusable UI components: **Pill**, **Button**, **Search Bar**, **JobCard**
+- Landing page with:
+  - **Recently Posted Jobs**
+  - **Popular Jobs**
+  - **Search bar and filter UI** (non-functional for now)
+  - **Carousel with arrow disabling** (fades/disables when at start or end of scroll for smoother navigation)
 
 ---
 
 ## Tech Stack
-
-## 🛠 Tech Stack
 
 [![Next.js](https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
