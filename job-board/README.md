@@ -25,6 +25,12 @@ The platform connects **job seekers** with **employers**, offering an accessible
     - Jobs displayed in a grid layout
     - No Jobs Found component with illustration + reset filters button
     - Reset button in filter bar
+  - **Job Details Page**:
+    - Company logo & name
+    - Share, Apply, and Save actions
+    - Meta details
+    - Carousel of more jobs from the same company
+    - Similar jobs recommendations
 
 ---
 
