@@ -150,14 +150,23 @@ export default function FilterBar() {
         />
       </div>
 
-      {/* Apply button */}
-      <Button
-        type="submit"
-        onClick={() => alert("Filters applied!")}
-        className="bg-[var(--foreground)] text-white mt-5"
-      >
-        Apply Filters
-      </Button>
+      {/* Buttons */}
+      <div className="mt-6 flex gap-3 w-full">
+        <Button
+          type="reset"
+          onClick={() => alert("Filters reset!")}
+          className="flex-1/2 text-gray-600 border-2 border-gray-400 hover:bg-gray-100 focus:outline-none focus:ring-gray-400"
+        >
+          RESET
+        </Button>
+        <Button
+          type="submit"
+          onClick={() => alert("Filters applied!")}
+          className="bg-[var(--foreground)] text-white flex-1/2 focus:ring-[var(--foreground)]"
+        >
+          APPLY
+        </Button>
+      </div>
     </form>
   );
 }

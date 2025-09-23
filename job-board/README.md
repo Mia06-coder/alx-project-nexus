@@ -19,8 +19,12 @@ The platform connects **job seekers** with **employers**, offering an accessible
   - **Search bar and filter UI** (non-functional for now)
   - **Carousel with arrow disabling** (fades/disables when at start or end of scroll for smoother navigation)
   - **Filter drawer** with:
-  - Framer Motion animations
-  - React Select searchable dropdowns
+    - Framer Motion animations
+    - React Select searchable dropdowns
+  - **Search results handling**:
+    - Jobs displayed in a grid layout
+    - No Jobs Found component with illustration + reset filters button
+    - Reset button in filter bar
 
 ---
 
