@@ -1,10 +1,14 @@
 import { FaShareAlt, FaMapMarkerAlt, FaMoneyBillWave } from "react-icons/fa";
 import Image from "next/image";
-import JobCard from "@/components/JobCard"; // for carousel items
+import JobCard from "@/components/JobCard";
 import Button from "@/components/Button";
 import Carousel from "@/components/Carousel";
+import { useState } from "react";
+import ApplicationModal from "@/components/ApplicationModal";
 
 export default function JobDetails() {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <main className="max-w-5xl mx-auto px-6 py-20">
       {/* Header */}
@@ -28,7 +32,7 @@ export default function JobDetails() {
           onClick={() => alert("Shared job listing")}
           aria-label="Share job"
         >
-          <FaShareAlt size={16} className="text-gray-600" />
+          <FaShareAlt size={20} className="text-gray-600" />
         </Button>
       </header>
 
@@ -36,13 +40,13 @@ export default function JobDetails() {
       <h2 className="text-2xl font-bold">Senior UI Developer</h2>
 
       {/* Meta info */}
-      <div className="flex flex-wrap gap-1 text-sm font-medium">
+      <div className="flex flex-wrap items-center gap-2 text-sm font-medium">
         <span>Posted 5 days ago</span>
-        <span>⋅</span>
+        <span className="w-1 h-1 rounded-full bg-black"></span>
         <span>Full-time</span>
-        <span>⋅</span>
+        <span className="w-1 h-1 rounded-full bg-black"></span>
         <span>Senior-Level</span>
-        <span>⋅</span>
+        <span className="w-1 h-1 rounded-full bg-black"></span>
         <span>Remote</span>
       </div>
 
@@ -54,13 +58,18 @@ export default function JobDetails() {
 
       {/* Actions */}
       <div className="flex gap-4 mb-10 max-w-md">
-        <Button className="bg-[var(--primary)] text-white flex-1">
+        <Button
+          className="bg-[var(--primary)] text-white flex-1"
+          onClick={() => setIsOpen(true)}
+        >
           Apply Now
         </Button>
         <Button className="border-2 border-[var(--primary)] text-[var(--primary)] flex-1">
           Save
         </Button>
       </div>
+
+      <ApplicationModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
 
       {/* Job description */}
       <section className="prose max-w-none mb-10">

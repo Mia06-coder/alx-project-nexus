@@ -18,12 +18,22 @@ export interface CarouselProps {
   children: React.ReactNode;
 }
 
-export interface FilterDrawerProps {
+export interface Option {
+  value: string;
+  label: string;
+}
+
+// Base interface for shared props
+interface ModalBaseProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-export interface Option {
-  value: string;
-  label: string;
+export type FilterDrawerProps = ModalBaseProps;
+export type ApplicationModalProps = ModalBaseProps;
+
+export interface ShareButtonProps {
+  url: string;
+  title: string;
+  text?: string;
 }

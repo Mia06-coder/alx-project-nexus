@@ -31,6 +31,9 @@ The platform connects **job seekers** with **employers**, offering an accessible
     - Meta details
     - Carousel of more jobs from the same company
     - Similar jobs recommendations
+  - **Application Modal**:
+    - Full name, email, phone, resume upload, interests
+    - Built with **react-dropzone**, **@headlessui/react**, **react-phone-number-input**
 
 ---
 
@@ -41,6 +44,11 @@ The platform connects **job seekers** with **employers**, offering an accessible
 [![Google Fonts](https://img.shields.io/badge/Poppins-Font-4285F4?style=for-the-badge&logo=googlefonts&logoColor=white)](https://fonts.google.com/specimen/Poppins)
 [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com/)
+[![Framer Motion](https://img.shields.io/badge/Framer_Motion-0055FF?style=for-the-badge&logo=framer&logoColor=white)](https://www.framer.com/motion/)
+[![React Select](https://img.shields.io/badge/React_Select-087EA4?style=for-the-badge&logo=react&logoColor=white)](https://react-select.com/)
+[![Headless UI](https://img.shields.io/badge/Headless_UI-111827?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://headlessui.com/)
+[![React Dropzone](https://img.shields.io/badge/React_Dropzone-FF4081?style=for-the-badge&logo=react&logoColor=white)](https://react-dropzone.js.org/)
+[![React Phone Number Input](https://img.shields.io/badge/React_Phone_Input-0A66C2?style=for-the-badge&logo=react&logoColor=white)](https://github.com/catamphetamine/react-phone-number-input)
 
 ---
 
