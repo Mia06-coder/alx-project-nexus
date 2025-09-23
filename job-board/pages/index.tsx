@@ -1,11 +1,15 @@
 // pages/index.tsx
 import Button from "@/components/Button";
 import Carousel from "@/components/Carousel";
+import FilterDrawer from "@/components/FilterDrawer";
 import JobCard from "@/components/JobCard";
 import SearchBar from "@/components/SearchBar";
+import { useState } from "react";
 import { FaSliders } from "react-icons/fa6";
 
 export default function Home() {
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
   return (
     <>
       <div className="px-6 py-20 container mx-auto">
@@ -21,7 +25,7 @@ export default function Home() {
         <div className="mx-auto mt-6 flex justify-center items-center gap-2">
           <SearchBar />
 
-          <Button onClick={() => alert(`Clicked!`)}>
+          <Button onClick={() => setDrawerOpen(true)} aria-label="Open filters">
             <FaSliders size={20} />
           </Button>
         </div>
@@ -43,6 +47,12 @@ export default function Home() {
             </li>
           ))}
         </Carousel>
+
+        {/* Filter Drawer */}
+        <FilterDrawer
+          isOpen={drawerOpen}
+          onClose={() => setDrawerOpen(false)}
+        />
       </div>
     </>
   );

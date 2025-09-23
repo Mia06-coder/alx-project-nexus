@@ -17,3 +17,13 @@ export interface CarouselProps {
   ariaLabel: string;
   children: React.ReactNode;
 }
+
+export interface FilterDrawerProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export interface Option {
+  value: string;
+  label: string;
+}
