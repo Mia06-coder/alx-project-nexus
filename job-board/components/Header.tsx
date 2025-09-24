@@ -52,7 +52,9 @@ export default function Header() {
             />
           </button>
 
-          <h1 className="text-xl font-bold cursor-pointer">JobBoardX</h1>
+          <Link href="/">
+            <h1 className="text-xl font-bold cursor-pointer">JobBoardX</h1>
+          </Link>
         </div>
 
         {/* Center (Desktop Links) */}
@@ -62,11 +64,11 @@ export default function Header() {
         >
           {NAV_LINKS.map((nav_link) => (
             <Link
-              key={nav_link}
-              href="#"
+              key={nav_link.link}
+              href={nav_link.url}
               className="hover:text-[var(--primary)]"
             >
-              {nav_link}
+              {nav_link.link}
             </Link>
           ))}
         </nav>
@@ -182,12 +184,12 @@ export default function Header() {
         >
           {NAV_LINKS.map((nav_link) => (
             <Link
-              key={nav_link}
-              href="#"
+              key={nav_link.link}
+              href={nav_link.url}
               className="hover:text-[var(--primary)]"
               onClick={() => setMenuOpen(false)}
             >
-              {nav_link}
+              {nav_link.link}
             </Link>
           ))}
         </nav>
