@@ -45,3 +45,16 @@ export interface EmptyStateProps {
   variant: EmptyStateVariant;
   onActionClick?: () => void;
 }
+
+export interface PageHeaderProps {
+  title: string;
+  subtitle: string;
+}
+
+export interface JobsSectionProps {
+  id: string;
+  title: string;
+  subtitle?: string;
+  showCount?: boolean;
+  count?: number;
+}

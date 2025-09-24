@@ -3,6 +3,7 @@ import Button from "@/components/Button";
 import Carousel from "@/components/Carousel";
 import FilterDrawer from "@/components/FilterDrawer";
 import JobCard from "@/components/JobCard";
+import PageHeader from "@/components/PageHeader";
 import SearchBar from "@/components/SearchBar";
 import { useState } from "react";
 import { FaSliders } from "react-icons/fa6";
@@ -14,12 +15,10 @@ export default function Home() {
     <>
       <div className="px-6 py-20 container mx-auto">
         {/* Header */}
-        <div className="max-w-5xl mx-auto text-center">
-          <h2 className="text-3xl font-bold">Browse Jobs</h2>
-          <p className="opacity-80 mt-2">
-            Find your next opportunity among thousands of openings.
-          </p>
-        </div>
+        <PageHeader
+          title="Browse Jobs"
+          subtitle="Find your next opportunity among thousands of openings."
+        />
 
         {/* Search + Filter */}
         <div className="mx-auto mt-6 flex justify-center items-center gap-2">

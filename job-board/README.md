@@ -25,15 +25,24 @@ The platform connects **job seekers** with **employers**, offering an accessible
     - Jobs displayed in a grid layout
     - No Jobs Found component with illustration + reset filters button
     - Reset button in filter bar
-  - **Job Details Page**:
-    - Company logo & name
-    - Share, Apply, and Save actions
-    - Meta details
-    - Carousel of more jobs from the same company
-    - Similar jobs recommendations
+- **Job Details Page**:
+  - Company logo & name
+  - Share, Apply, and Save actions
+  - Meta details
+  - Carousel of more jobs from the same company
+  - Similar jobs recommendations
   - **Application Modal**:
     - Full name, email, phone, resume upload, interests
     - Built with **react-dropzone**, **@headlessui/react**, **react-phone-number-input**
+- Empty States
+  - Reusable `EmptyState` component for:
+    - No saved jobs
+    - No applications
+    - No search results
+- Jobs Display
+  - `JobsGrid` with consistent layout and Load More button
+  - `JobsSection` with title, subtitle, and embedded job grid
+  - `PageHeader` for consistent page titles and context
 
 ---
 
@@ -95,6 +104,7 @@ The platform connects **job seekers** with **employers**, offering an accessible
 .
 ├── pages/          # Next.js pages
 ├── components/     # Reusable UI components
+├── interfaces/
 ├── styles/         # Global & Tailwind styles
 ├── public/         # Static assets
 └── README.md       # Project documentation
@@ -114,3 +124,12 @@ The platform connects **job seekers** with **employers**, offering an accessible
 ## License
 
 This project is licensed under the **MIT License** – see the [LICENSE](LICENSE) file for details.
+
+---
+
+## Contact
+
+Made with ❤️ by **Mia Mudzingwa**
+
+- GitHub: [Mia06-coder](https://github.com/Mia06-coder)
+- LinkedIn: [mia-mudzingwa](https://www.linkedin.com/in/mia-mudzingwa)
