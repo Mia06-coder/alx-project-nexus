@@ -1,3 +1,6 @@
+// interfaces/index.ts
+import { EmptyStateVariant } from "@/types";
+
 // interfaces/Index.ts
 export interface PillProps {
   text: string;
@@ -36,4 +39,9 @@ export interface ShareButtonProps {
   url: string;
   title: string;
   text?: string;
+}
+
+export interface EmptyStateProps {
+  variant: EmptyStateVariant;
+  onActionClick?: () => void;
 }
