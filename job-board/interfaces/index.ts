@@ -56,5 +56,27 @@ export interface JobsSectionProps {
   title: string;
   subtitle?: string;
   showCount?: boolean;
-  count?: number;
+}
+
+// Represents a company associated with a job
+export interface CompanyProps {
+  id: number; // Unique company ID
+  name: string; // Company name
+  description: string; // Company description
+  website?: string; // Optional company website
+  owner: number; // Owner of the company
+  created_at: string; // ISO timestamp when company was created
+}
+
+// Represents a job listing
+export interface JobProps {
+  id: number; // Unique job ID (read-only from API)
+  title: string; // Job title (max 200 chars)
+  description: string; // Job description
+  company: CompanyProps; // Company details
+  location: string; // Job location (max 100 chars)
+  posted_by: string; // User who posted the job (read-only from API)
+  created_at: string; // ISO timestamp (read-only)
+  updated_at: string; // ISO timestamp (read-only)
+  is_active: boolean; // Job status (active/inactive)
 }

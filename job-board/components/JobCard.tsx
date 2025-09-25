@@ -3,8 +3,15 @@ import Image from "next/image";
 import { FaRegBookmark } from "react-icons/fa";
 import Pill from "./Pill";
 import Button from "./Button";
+import { JobProps } from "@/interfaces";
+import { timeAgo } from "@/utils/timeAgo";
 
-export default function JobCard() {
+export default function JobCard({
+  title,
+  company,
+  location,
+  created_at,
+}: JobProps) {
   return (
     <>
       {/* Glass card */}
@@ -36,15 +43,17 @@ export default function JobCard() {
                 alt="Nike company logo"
                 className="object-contain "
                 fill
+                sizes="32px"
+                priority
               />
             </div>
             <div>
               <h4 id="job-title" className="text-sm font-bold mt-3">
-                Senior UI Developer
+                {title}
               </h4>
               <p id="job-meta" className="text-sm opacity-90 flex flex-col">
-                Nike · San Francisco, CA
-                <span className="text-xs opacity-70">Design</span>
+                {company.name}
+                <span className="text-xs opacity-70">{location}</span>
               </p>
             </div>
           </div>
@@ -65,7 +74,7 @@ export default function JobCard() {
         {/* Bottom row: date + CTA */}
         <div className="flex justify-between items-center p-6">
           <time className="text-xs opacity-70" dateTime="2025-09-15">
-            Posted 5 days ago
+            Posted {timeAgo(created_at)}
           </time>
           <Button
             onClick={() => alert("Clicked!")}
