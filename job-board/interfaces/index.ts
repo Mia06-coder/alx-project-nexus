@@ -65,6 +65,7 @@ export interface JobsSectionProps {
 export interface CompanyProps {
   id: number; // Unique company ID
   name: string; // Company name
+  logo?: string;
   description: string; // Company description
   website?: string; // Optional company website
   owner: number; // Owner of the company
@@ -77,6 +78,7 @@ export interface JobProps {
   title: string; // Job title (max 200 chars)
   description: string; // Job description
   company: CompanyProps; // Company details
+  salary?: string;
   location: string; // Job location (max 100 chars)
   posted_by: string; // User who posted the job (read-only from API)
   created_at: string; // ISO timestamp (read-only)

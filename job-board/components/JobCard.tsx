@@ -5,13 +5,17 @@ import Pill from "./Pill";
 import Button from "./Button";
 import { JobProps } from "@/interfaces";
 import { timeAgo } from "@/utils/timeAgo";
+import { useRouter } from "next/router";
 
 export default function JobCard({
+  id,
   title,
   company,
   location,
   created_at,
 }: JobProps) {
+  const router = useRouter();
+
   return (
     <>
       {/* Glass card */}
@@ -77,9 +81,9 @@ export default function JobCard({
             Posted {timeAgo(created_at)}
           </time>
           <Button
-            onClick={() => alert("Clicked!")}
+            onClick={() => router.push(`/jobs/${id}`)}
             className=" bg-[var(--foreground)] text-white text-xs shadow"
-            aria-label="Apply for Senior UI Developer role at Nike"
+            aria-label={`Apply for ${title} role at ${company.name}`}
           >
             Apply
           </Button>
