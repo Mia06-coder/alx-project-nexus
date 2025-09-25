@@ -2,13 +2,15 @@ import React from "react";
 import JobsGrid from "./JobsGrid";
 import PageHeader from "./PageHeader";
 import { JobsSectionProps } from "@/interfaces";
+import EmptyState from "./EmptyState";
 
 export default function JobsSection({
+  sectionJobs,
   id,
   title,
   subtitle,
+  variant,
   showCount = false,
-  count,
 }: JobsSectionProps) {
   return (
     <>
@@ -25,14 +27,20 @@ export default function JobsSection({
         aria-labelledby={`${id}-title`}
         className="py-10 max-w-6xl mx-auto"
       >
-        {/* Count text (only when needed) */}
-        {showCount && typeof count === "number" && (
-          <p className="text-sm opacity-70 mb-4" aria-live="polite">
-            {count} results
-          </p>
-        )}
+        {sectionJobs.length === 0 ? (
+          <EmptyState variant={variant} />
+        ) : (
+          <>
+            {/* Count text (only when needed) */}
+            {showCount && (
+              <p className="text-sm opacity-70 mb-4" aria-live="polite">
+                {sectionJobs.length} results
+              </p>
+            )}
 
-        <JobsGrid />
+            <JobsGrid jobs={sectionJobs} />
+          </>
+        )}
       </section>
     </>
   );

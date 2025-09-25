@@ -52,10 +52,11 @@ export interface PageHeaderProps {
 }
 
 export interface JobsSectionProps {
-  allJobs: JobProps[];
+  sectionJobs: JobProps[];
   id: string;
   title: string;
   subtitle?: string;
+  variant: EmptyStateVariant;
   showCount?: boolean;
 }
 
@@ -82,10 +83,21 @@ export interface JobProps {
   is_active: boolean; // Job status (active/inactive)
 }
 
+export interface Filters {
+  location: Option | null;
+  company: Option | null;
+}
+
 export interface JobsContextType {
   jobs: JobProps[];
+  filteredJobs: JobProps[];
   featuredJobs: JobProps[];
+  locations: string[];
+  companies: string[];
   loading: boolean;
   error: string | null;
+  filters: Filters;
+  applyFilters: (newFilters: Partial<Filters>) => void;
+  resetFilters: () => void;
   refetchJobs: () => Promise<void>;
 }

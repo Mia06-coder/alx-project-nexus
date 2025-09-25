@@ -1,5 +1,5 @@
 // context/JobsContext.tsx
-import { JobProps, JobsContextType } from "@/interfaces";
+import { Filters, JobProps, JobsContextType } from "@/interfaces";
 import { getRandomJobs } from "@/utils/getRandomJobs";
 import React, {
   createContext,
@@ -13,9 +13,17 @@ const JobsContext = createContext<JobsContextType | undefined>(undefined);
 
 export function JobsProvider({ children }: { children: ReactNode }) {
   const [jobs, setJobs] = useState<JobProps[]>([]);
+  const [filteredJobs, setFilteredJobs] = useState<JobProps[]>([]);
   const [featuredJobs, setFeaturedJobs] = useState<JobProps[]>([]);
+  const [locations, setLocations] = useState<string[]>([]);
+  const [companies, setCompanies] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const [filters, setFilters] = useState<Filters>({
+    location: null,
+    company: null,
+  });
 
   async function fetchAllJobs() {
     setLoading(true);
@@ -39,6 +47,17 @@ export function JobsProvider({ children }: { children: ReactNode }) {
       }
 
       setJobs(allJobs);
+      setFilteredJobs(allJobs);
+
+      const uniqueLocations = [
+        ...new Set(allJobs.map((job: JobProps) => job.location)),
+      ];
+      const uniqueCompanies = [
+        ...new Set(allJobs.map((job: JobProps) => job.company.name)),
+      ];
+
+      setLocations(uniqueLocations);
+      setCompanies(uniqueCompanies);
 
       // Handle featured jobs (session cached)
       const storedFeatured = sessionStorage.getItem("featuredJobs");
@@ -49,11 +68,44 @@ export function JobsProvider({ children }: { children: ReactNode }) {
         setFeaturedJobs(featured);
         sessionStorage.setItem("featuredJobs", JSON.stringify(featured));
       }
+
+      setError(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
       setLoading(false);
     }
+  }
+
+  // Apply filters locally
+  function applyFilters(newFilters: Partial<Filters>) {
+    const updatedFilters = { ...filters, ...newFilters };
+    setFilters(updatedFilters);
+
+    const filtered = jobs.filter((job) => {
+      const matchesLocation = updatedFilters.location
+        ? job.location
+            ?.toLowerCase()
+            .includes(updatedFilters.location.value.toLowerCase())
+        : true;
+
+      const matchesCompany = updatedFilters.company
+        ? job.company?.name.toLowerCase() ===
+          updatedFilters.company.value.toLowerCase()
+        : true;
+
+      return matchesLocation && matchesCompany;
+    });
+
+    setFilteredJobs(filtered);
+  }
+
+  function resetFilters() {
+    setFilters({
+      location: null,
+      company: null,
+    });
+    setFilteredJobs(jobs);
   }
 
   useEffect(() => {
@@ -66,7 +118,19 @@ export function JobsProvider({ children }: { children: ReactNode }) {
 
   return (
     <JobsContext.Provider
-      value={{ jobs, featuredJobs, loading, error, refetchJobs: fetchAllJobs }}
+      value={{
+        jobs,
+        filteredJobs,
+        featuredJobs,
+        locations,
+        companies,
+        loading,
+        error,
+        filters,
+        applyFilters,
+        resetFilters,
+        refetchJobs: fetchAllJobs,
+      }}
     >
       {children}
     </JobsContext.Provider>
