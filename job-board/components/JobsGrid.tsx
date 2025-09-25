@@ -1,6 +1,5 @@
 // components/JobsGrid.tsx
 import JobCard from "./JobCard";
-import Button from "./Button";
 import { JobProps } from "@/interfaces";
 
 export default function JobsGrid({ jobs }: { jobs: JobProps[] }) {
@@ -14,17 +13,6 @@ export default function JobsGrid({ jobs }: { jobs: JobProps[] }) {
         {jobs.map((job) => (
           <JobCard key={job.id} {...job} />
         ))}
-      </div>
-
-      {/* Load more */}
-      <div className="flex justify-center mt-12">
-        <Button
-          type="button"
-          onClick={() => alert("Loading more jobs...")}
-          className="border-2 border-[var(--primary)] text-[var(--primary)]"
-        >
-          Load More
-        </Button>
       </div>
     </>
   );

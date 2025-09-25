@@ -53,6 +53,7 @@ export interface PageHeaderProps {
 
 export interface JobsSectionProps {
   sectionJobs: JobProps[];
+  totalJobs: number;
   id: string;
   title: string;
   subtitle?: string;

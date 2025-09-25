@@ -1,3 +1,4 @@
+// pages/jobs/index.tsx
 import Button from "@/components/Button";
 import FilterDrawer from "@/components/FilterDrawer";
 import JobsSection from "@/components/JobsSection";
@@ -10,6 +11,7 @@ import { FaSliders } from "react-icons/fa6";
 export default function JobsPage() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { filteredJobs, loading, error } = useJobs();
+  const [visibleCount, setVisibleCount] = useState(10); // initially show 10 jobs
 
   if (loading) {
     return (
@@ -47,12 +49,28 @@ export default function JobsPage() {
         </div>
 
         <JobsSection
-          sectionJobs={filteredJobs}
+          sectionJobs={filteredJobs.slice(0, visibleCount)}
+          totalJobs={filteredJobs.length}
           id="job-results"
           title="Job Results"
           variant="search"
           showCount={true}
         />
+
+        {visibleCount < filteredJobs.length && (
+          <>
+            {/* Load more */}
+            <div className="flex justify-center mt-12">
+              <Button
+                type="button"
+                onClick={() => setVisibleCount((prev) => prev + 10)} // load 10 more each time
+                className="border-2 border-[var(--primary)] text-[var(--primary)]"
+              >
+                Load More
+              </Button>
+            </div>
+          </>
+        )}
 
         {/* Filter Drawer */}
         <FilterDrawer

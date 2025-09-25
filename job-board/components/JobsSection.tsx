@@ -6,6 +6,7 @@ import EmptyState from "./EmptyState";
 
 export default function JobsSection({
   sectionJobs,
+  totalJobs,
   id,
   title,
   subtitle,
@@ -34,7 +35,7 @@ export default function JobsSection({
             {/* Count text (only when needed) */}
             {showCount && (
               <p className="text-sm opacity-70 mb-4" aria-live="polite">
-                {sectionJobs.length} results
+                {totalJobs} results
               </p>
             )}
 
