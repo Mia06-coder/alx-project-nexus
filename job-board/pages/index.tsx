@@ -5,67 +5,13 @@ import FilterDrawer from "@/components/FilterDrawer";
 import JobCard from "@/components/JobCard";
 import PageHeader from "@/components/PageHeader";
 import SearchBar from "@/components/SearchBar";
-import { JobProps } from "@/interfaces";
-import { getRandomJobs } from "@/utils/getRandomJobs";
-import { useEffect, useState } from "react";
+import { useJobs } from "@/context/JobsContext";
+import { useState } from "react";
 import { FaSliders } from "react-icons/fa6";
 
 export default function Home() {
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [jobs, setJobs] = useState<JobProps[]>([]);
-  const [featuredJobs, setFeaturedJobs] = useState<JobProps[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    async function fetchAllJobs() {
-      setLoading(true);
-      let allJobs: JobProps[] = [];
-      let page = 1;
-      let hasNext = true;
-
-      try {
-        while (hasNext) {
-          const res = await fetch(`/api/jobs/?page=${page}`);
-          if (!res.ok) throw new Error("Failed to fetch jobs");
-          const data = await res.json();
-
-          allJobs = [...allJobs, ...data.results];
-
-          if (data.next) {
-            page += 1;
-          } else {
-            hasNext = false;
-          }
-        }
-
-        setJobs(allJobs);
-        console.log(allJobs.length);
-
-        // Handle featured jobs with session storage
-        const storedFeatured = sessionStorage.getItem("featuredJobs");
-        if (storedFeatured) {
-          setFeaturedJobs(JSON.parse(storedFeatured));
-        } else {
-          const featured = getRandomJobs(allJobs, 5);
-          setFeaturedJobs(featured);
-          sessionStorage.setItem("featuredJobs", JSON.stringify(featured));
-        }
-      } catch (error: unknown) {
-        if (error instanceof Error) {
-          setError(error.message);
-          console.error("Error fetching jobs:", error);
-        } else {
-          setError("Something went wrong");
-          console.error("Unknown error:", error);
-        }
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchAllJobs();
-  }, []);
+  const { jobs, featuredJobs, loading, error } = useJobs();
 
   if (loading) {
     return (

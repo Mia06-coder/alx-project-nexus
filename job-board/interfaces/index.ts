@@ -52,6 +52,7 @@ export interface PageHeaderProps {
 }
 
 export interface JobsSectionProps {
+  allJobs: JobProps[];
   id: string;
   title: string;
   subtitle?: string;
@@ -79,4 +80,12 @@ export interface JobProps {
   created_at: string; // ISO timestamp (read-only)
   updated_at: string; // ISO timestamp (read-only)
   is_active: boolean; // Job status (active/inactive)
+}
+
+export interface JobsContextType {
+  jobs: JobProps[];
+  featuredJobs: JobProps[];
+  loading: boolean;
+  error: string | null;
+  refetchJobs: () => Promise<void>;
 }
