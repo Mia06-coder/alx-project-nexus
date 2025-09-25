@@ -63,7 +63,7 @@ export default function Home() {
 
         {/* Recently Posted */}
         <Carousel title="Recently Posted" ariaLabel="recent job postings">
-          {jobs.map((job) => (
+          {jobs.slice(0, 10).map((job) => (
             <li key={`recent-${job.id}`}>
               <JobCard {...job} />
             </li>
@@ -84,7 +84,7 @@ export default function Home() {
           <Button
             type="button"
             onClick={() => (window.location.href = "/jobs")}
-            className="border-2 border-[var(--primary)] text-[var(--primary)]"
+            className="border-2 border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)] hover:text-white"
           >
             Browse All Jobs
           </Button>
