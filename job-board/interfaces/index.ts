@@ -145,3 +145,20 @@ export interface ApplicationsContextType {
   removeApplication: (jobId: number) => void;
   clearApplications: () => void;
 }
+
+export interface FavoriteJob {
+  id: number;
+  job: string;
+  user: string;
+  created_at: string;
+}
+
+export interface FavoritesContextType {
+  favorites: FavoriteJob[];
+  favoriteJobs: JobProps[];
+  loading: boolean;
+  error: string | null;
+  fetchFavorites: (page?: number) => Promise<void>;
+  addFavorite: (jobId: number) => Promise<void>;
+  removeFavorite: (favoriteId: number) => Promise<void>;
+}
