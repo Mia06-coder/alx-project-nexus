@@ -88,7 +88,11 @@ export default function JobDetails() {
         </Button>
       </div>
 
-      <ApplicationModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      <ApplicationModal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        job={job}
+      />
 
       {/* Job description */}
       <section className="prose max-w-none mb-10">
