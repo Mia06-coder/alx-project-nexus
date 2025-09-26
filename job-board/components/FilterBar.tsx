@@ -5,8 +5,15 @@ import { Option } from "@/interfaces";
 import { useJobs } from "@/context/JobsContext";
 
 export default function FilterBar() {
-  const { locations, companies, filters, applyFilters, resetFilters } =
-    useJobs();
+  const {
+    locations,
+    companies,
+    categories,
+    experienceLvls,
+    filters,
+    applyFilters,
+    resetFilters,
+  } = useJobs();
 
   const locationOptions: Option[] = locations.map((location) => ({
     value: location.toLowerCase(),
@@ -16,6 +23,16 @@ export default function FilterBar() {
   const companyOptions: Option[] = companies.map((company) => ({
     value: company.toLowerCase(),
     label: company,
+  }));
+
+  const categoryOptions: Option[] = categories.map((category) => ({
+    value: category.toLowerCase(),
+    label: category,
+  }));
+
+  const experienceOptions: Option[] = experienceLvls.map((experience) => ({
+    value: experience.toLowerCase(),
+    label: experience,
   }));
 
   return (
@@ -48,6 +65,32 @@ export default function FilterBar() {
           aria-label="Filter by company"
           value={filters.company}
           onChange={(opt) => applyFilters({ company: opt })}
+          isClearable
+          isSearchable
+        />
+      </div>
+
+      {/* Categories */}
+      <div className="min-w-50 flex-1">
+        <Select
+          options={categoryOptions}
+          placeholder="Category"
+          aria-label="Filter by category"
+          value={filters.category}
+          onChange={(opt) => applyFilters({ category: opt })}
+          isClearable
+          isSearchable
+        />
+      </div>
+
+      {/* Experience Level */}
+      <div className="min-w-50 flex-1">
+        <Select
+          options={experienceOptions}
+          placeholder="Experience Level"
+          aria-label="Filter by experience level"
+          value={filters.experienceLvl}
+          onChange={(opt) => applyFilters({ experienceLvl: opt })}
           isClearable
           isSearchable
         />

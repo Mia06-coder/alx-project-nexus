@@ -1,4 +1,5 @@
 // context/JobsContext.tsx
+import { CATEGORIES, EXPERIENCE_LEVELS } from "@/constants/filters";
 import { Filters, JobProps, JobsContextType } from "@/interfaces";
 import { getRandomJobs } from "@/utils/getRandomJobs";
 import React, {
@@ -17,12 +18,16 @@ export function JobsProvider({ children }: { children: ReactNode }) {
   const [featuredJobs, setFeaturedJobs] = useState<JobProps[]>([]);
   const [locations, setLocations] = useState<string[]>([]);
   const [companies, setCompanies] = useState<string[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [experienceLvls, setExperienceLvls] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const [filters, setFilters] = useState<Filters>({
     location: null,
     company: null,
+    category: null,
+    experienceLvl: null,
   });
 
   async function fetchAllJobs() {
@@ -58,6 +63,8 @@ export function JobsProvider({ children }: { children: ReactNode }) {
 
       setLocations(uniqueLocations);
       setCompanies(uniqueCompanies);
+      setCategories([...CATEGORIES]);
+      setExperienceLvls([...EXPERIENCE_LEVELS]);
 
       // Handle featured jobs (session cached)
       const storedFeatured = sessionStorage.getItem("featuredJobs");
@@ -94,7 +101,24 @@ export function JobsProvider({ children }: { children: ReactNode }) {
           updatedFilters.company.value.toLowerCase()
         : true;
 
-      return matchesLocation && matchesCompany;
+      const matchesCategory = updatedFilters.category
+        ? job.category
+            ?.toLowerCase()
+            .includes(updatedFilters.category.value.toLowerCase())
+        : true;
+
+      const matchesExperienceLevel = updatedFilters.experienceLvl
+        ? job.experience
+            ?.toLowerCase()
+            .includes(updatedFilters.experienceLvl.value.toLowerCase())
+        : true;
+
+      return (
+        matchesLocation &&
+        matchesCompany &&
+        matchesCategory &&
+        matchesExperienceLevel
+      );
     });
 
     setFilteredJobs(filtered);
@@ -104,6 +128,8 @@ export function JobsProvider({ children }: { children: ReactNode }) {
     setFilters({
       location: null,
       company: null,
+      category: null,
+      experienceLvl: null,
     });
     setFilteredJobs(jobs);
   }
@@ -124,6 +150,8 @@ export function JobsProvider({ children }: { children: ReactNode }) {
         featuredJobs,
         locations,
         companies,
+        categories,
+        experienceLvls,
         loading,
         error,
         filters,

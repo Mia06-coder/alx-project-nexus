@@ -103,6 +103,8 @@ export interface JobProps {
 export interface Filters {
   location: Option | null;
   company: Option | null;
+  category: Option | null;
+  experienceLvl: Option | null;
 }
 
 export interface JobsContextType {
@@ -111,6 +113,8 @@ export interface JobsContextType {
   featuredJobs: JobProps[];
   locations: string[];
   companies: string[];
+  categories: string[];
+  experienceLvls: string[];
   loading: boolean;
   error: string | null;
   filters: Filters;
