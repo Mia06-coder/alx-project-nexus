@@ -11,7 +11,7 @@ export default function JobsGrid({ jobs }: { jobs: JobProps[] }) {
         role="list"
       >
         {jobs.map((job) => (
-          <JobCard key={job.id} {...job} />
+          <JobCard key={job.id} job={job} />
         ))}
       </div>
     </>

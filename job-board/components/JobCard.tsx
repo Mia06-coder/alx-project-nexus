@@ -7,20 +7,8 @@ import { JobProps } from "@/interfaces";
 import { timeAgo } from "@/utils/timeAgo";
 import { useRouter } from "next/router";
 
-export default function JobCard({
-  id,
-  title,
-  company,
-  location,
-  created_at,
-  salary,
-  salary_currency,
-  mode_display,
-  category,
-  experience_display,
-}: JobProps) {
+export default function JobCard({ job }: { job: JobProps }) {
   const router = useRouter();
-
   return (
     <>
       {/* Glass card */}
@@ -35,10 +23,10 @@ export default function JobCard({
         <div className="bg-gradient-to-br from-[var(--primary)]/80 via-transparent to-[var(--secondary)]/60 p-6">
           {/* Top row: salary + bookmark */}
           <div className="flex justify-between items-center">
-            {salary ? (
+            {job.salary ? (
               <span className="text-sm font-semibold opacity-90">
-                {salary_currency}
-                {salary}/hr
+                {job.salary_currency}
+                {job.salary}/hr
               </span>
             ) : (
               <span></span>
@@ -65,12 +53,12 @@ export default function JobCard({
             </div>
             <div>
               <h4 id="job-title" className="font-bold mt-3">
-                {title}
+                {job.title}
               </h4>
               <p id="job-meta" className="text-sm flex flex-col">
-                {company.name}
-                <span className="text-xs opacity-90">{location}</span>
-                <span className="text-xs opacity-70">{category}</span>
+                {job.company.name}
+                <span className="text-xs opacity-90">{job.location}</span>
+                <span className="text-xs opacity-70">{job.category}</span>
               </p>
             </div>
           </div>
@@ -78,14 +66,14 @@ export default function JobCard({
           <ul className="flex flex-wrap gap-2 mt-2" aria-label="Job tags">
             <li>
               <Pill
-                text={mode_display}
+                text={job.mode_display}
                 className=" bg-white/20 backdrop-blur-md border border-white/30 text-gray-900 shadow-sm
   [box-shadow:inset_1px_1px_2px_rgba(255,255,255,0.4)]"
               />
             </li>
             <li>
               <Pill
-                text={experience_display}
+                text={job.experience_display}
                 className=" bg-white/20 backdrop-blur-md border border-white/30 text-gray-900 shadow-sm
   [box-shadow:inset_1px_1px_2px_rgba(255,255,255,0.4)]"
               />
@@ -96,14 +84,15 @@ export default function JobCard({
         {/* Bottom row: date + CTA */}
         <div className="flex justify-between items-center p-6">
           <time className="text-xs opacity-70" dateTime="2025-09-15">
-            Posted {timeAgo(created_at)}
+            Posted {timeAgo(job.created_at)}
           </time>
+
           <Button
-            onClick={() => router.push(`/jobs/${id}`)}
+            onClick={() => router.push(`/jobs/${job.id}`)}
             className=" bg-[var(--foreground)] text-white text-xs shadow"
-            aria-label={`Apply for ${title} role at ${company.name}`}
+            aria-label={`Apply for ${job.title} role at ${job.company.name}`}
           >
-            Apply
+            View Details
           </Button>
         </div>
       </article>
