@@ -7,11 +7,13 @@ import ApplicationModal from "@/components/ApplicationModal";
 import { useJobs } from "@/context/JobsContext";
 import { timeAgo } from "@/utils/timeAgo";
 import BackButton from "@/components/BackButton";
+import { useApplications } from "@/hooks/useApplications";
 
 export default function JobDetails() {
   const router = useRouter();
   const { id } = router.query;
   const { jobs, loading, error } = useJobs();
+  const { appliedJobs } = useApplications();
   const [job, setJob] = useState<(typeof jobs)[0] | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -26,6 +28,8 @@ export default function JobDetails() {
   if (loading) return <p className="text-center py-20">Loading job...</p>;
   if (error) return <p className="text-center py-20 text-red-500">{error}</p>;
   if (!job) return <p className="text-center py-20">Job not found</p>;
+
+  const application = appliedJobs.find((a) => a.id === job.id);
 
   return (
     <main className="max-w-5xl mx-auto px-6 pt-10 pb-20">
@@ -66,6 +70,16 @@ export default function JobDetails() {
         <span className="w-1 h-1 rounded-full bg-black"></span>
         <span>{job.experience_display}</span>
       </div>
+      {application && (
+        <p className="opacity-75 text-xs">
+          ✅ Applied on{" "}
+          {new Date(application.created_at).toLocaleDateString("en-GB", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+          })}
+        </p>
+      )}
 
       {/* Salary */}
       {job.salary && (
@@ -76,13 +90,20 @@ export default function JobDetails() {
       )}
 
       {/* Actions */}
+
       <div className="flex gap-4 mt-6 mb-10 max-w-md">
-        <Button
-          className="bg-[var(--primary)] text-white flex-1"
-          onClick={() => setIsOpen(true)}
-        >
-          Apply Now
-        </Button>
+        {application ? (
+          <Button className="bg-[var(--primary)] text-white flex-1" disabled>
+            Applied
+          </Button>
+        ) : (
+          <Button
+            className="bg-[var(--primary)] text-white flex-1"
+            onClick={() => setIsOpen(true)}
+          >
+            Apply Now
+          </Button>
+        )}
         <Button className="border-2 border-[var(--primary)] text-[var(--primary)] flex-1">
           Save
         </Button>
