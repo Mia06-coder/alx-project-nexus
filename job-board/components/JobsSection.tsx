@@ -13,32 +13,29 @@ export default function JobsSection({
   variant,
   showCount = false,
 }: JobsSectionProps) {
+  console.log(sectionJobs);
   return (
     <>
-      {/* Optional header */}
-      {subtitle ? (
-        <PageHeader title={title} subtitle={subtitle} />
-      ) : (
-        <h3 id={`${id}-title`} className="sr-only">
-          {title}
-        </h3>
-      )}
-
-      <section
-        aria-labelledby={`${id}-title`}
-        className="py-10 max-w-6xl mx-auto"
-      >
+      <section aria-labelledby={`${id}-title`} className="max-w-6xl mx-auto">
         {sectionJobs.length === 0 ? (
           <EmptyState variant={variant} />
         ) : (
           <>
+            {" "}
+            {/* Optional header */}
+            {subtitle ? (
+              <PageHeader title={title} subtitle={subtitle} />
+            ) : (
+              <h3 id={`${id}-title`} className="sr-only">
+                {title}
+              </h3>
+            )}
             {/* Count text (only when needed) */}
             {showCount && (
-              <p className="text-sm opacity-70 mb-4" aria-live="polite">
+              <p className="text-sm opacity-70 mb-4 pt-10" aria-live="polite">
                 {totalJobs} results
               </p>
             )}
-
             <JobsGrid jobs={sectionJobs} />
           </>
         )}

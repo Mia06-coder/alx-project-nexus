@@ -1,10 +1,10 @@
 import Button from "@/components/Button";
 import JobsSection from "@/components/JobsSection";
-import { useApplications } from "@/hooks/useApplications";
+import { useFavorites } from "@/hooks/useFavorites";
 import React, { useState } from "react";
 
-export default function AppliedJobs() {
-  const { appliedJobs, loading, error } = useApplications();
+export default function FavoriteJobs() {
+  const { favoriteJobs, loading, error } = useFavorites();
   const [visibleCount, setVisibleCount] = useState(10); // initially show 10 jobs
 
   if (loading) {
@@ -25,19 +25,18 @@ export default function AppliedJobs() {
       </p>
     );
   }
-
   return (
     <div className="px-6 py-20 container mx-auto">
       <JobsSection
-        sectionJobs={appliedJobs.slice(0, visibleCount)}
-        totalJobs={appliedJobs.length}
-        id="job-applied"
-        title="My Applications"
-        subtitle="Track jobs you’ve applied to and view their status."
-        variant="applied"
+        sectionJobs={favoriteJobs.slice(0, visibleCount)}
+        totalJobs={favoriteJobs.length}
+        id="favorites-jobs"
+        title="Favorite Jobs"
+        subtitle="Jobs you’ve saved for later."
+        variant="saved"
         showCount={true}
       />
-      {visibleCount < appliedJobs.length && (
+      {visibleCount < favoriteJobs.length && (
         <>
           {/* Load more */}
           <div className="flex justify-center mt-12">
