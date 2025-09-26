@@ -38,7 +38,9 @@ interface ModalBaseProps {
 }
 
 export type FilterDrawerProps = ModalBaseProps;
-export type ApplicationModalProps = ModalBaseProps;
+export interface ApplicationModalProps extends ModalBaseProps {
+  job: JobProps;
+}
 
 export interface ShareButtonProps {
   url: string;
@@ -121,4 +123,25 @@ export interface JobsContextType {
   applyFilters: (newFilters: Partial<Filters>) => void;
   resetFilters: () => void;
   refetchJobs: () => Promise<void>;
+}
+
+export interface Application {
+  id: number;
+  job: number;
+  applicant: string;
+  cover_letter: string;
+  status: string;
+  created_at: string;
+}
+
+export interface ApplicationsContextType {
+  applications: Application[];
+  appliedJobIds: string[]; // store job IDs only
+  appliedJobs: JobProps[]; // derived from JobsContext
+  loading: boolean;
+  error: string | null;
+  fetchApplications: () => void;
+  applyToJob: (jobId: number, resume: string, cover_letter: string) => void;
+  removeApplication: (jobId: number) => void;
+  clearApplications: () => void;
 }
