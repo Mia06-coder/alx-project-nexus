@@ -62,18 +62,16 @@ export default function JobDetails() {
       <div className="flex flex-wrap items-center gap-2 text-sm font-medium">
         <span>Posted {timeAgo(job.created_at)}</span>
         <span className="w-1 h-1 rounded-full bg-black"></span>
-        <span>Full-time</span>
+        <span>{job.mode_display}</span>
         <span className="w-1 h-1 rounded-full bg-black"></span>
-        <span>Senior-Level</span>
-        <span className="w-1 h-1 rounded-full bg-black"></span>
-        <span>Remote</span>
+        <span>{job.experience_display}</span>
       </div>
 
       {/* Salary */}
       {job.salary && (
         <div className="flex items-center gap-2 text-sm">
           <FaMoneyBillWave className="text-green-600" />
-          {job.salary}
+          {job.salary}/hr
         </div>
       )}
 

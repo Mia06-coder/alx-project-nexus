@@ -13,6 +13,11 @@ export default function JobCard({
   company,
   location,
   created_at,
+  salary,
+  salary_currency,
+  mode_display,
+  category,
+  experience_display,
 }: JobProps) {
   const router = useRouter();
 
@@ -30,7 +35,14 @@ export default function JobCard({
         <div className="bg-gradient-to-br from-[var(--primary)]/80 via-transparent to-[var(--secondary)]/60 p-6">
           {/* Top row: salary + bookmark */}
           <div className="flex justify-between items-center">
-            <span className="text-sm font-semibold opacity-90">$120/hr</span>
+            {salary ? (
+              <span className="text-sm font-semibold opacity-90">
+                {salary_currency}
+                {salary}/hr
+              </span>
+            ) : (
+              <span></span>
+            )}
             <Button
               className="opacity-70 pr-0"
               aria-label="Save job for later"
@@ -52,26 +64,32 @@ export default function JobCard({
               />
             </div>
             <div>
-              <h4 id="job-title" className="text-sm font-bold mt-3">
+              <h4 id="job-title" className="font-bold mt-3">
                 {title}
               </h4>
-              <p id="job-meta" className="text-sm opacity-90 flex flex-col">
+              <p id="job-meta" className="text-sm flex flex-col">
                 {company.name}
-                <span className="text-xs opacity-70">{location}</span>
+                <span className="text-xs opacity-90">{location}</span>
+                <span className="text-xs opacity-70">{category}</span>
               </p>
             </div>
           </div>
           {/* Tags */}
           <ul className="flex flex-wrap gap-2 mt-2" aria-label="Job tags">
-            {["Full-time", "Senior level", "Remote"].map((t) => (
-              <li key={t}>
-                <Pill
-                  text={t}
-                  className=" bg-white/20 backdrop-blur-md border border-white/30 text-gray-900 shadow-sm
+            <li>
+              <Pill
+                text={mode_display}
+                className=" bg-white/20 backdrop-blur-md border border-white/30 text-gray-900 shadow-sm
   [box-shadow:inset_1px_1px_2px_rgba(255,255,255,0.4)]"
-                />
-              </li>
-            ))}
+              />
+            </li>
+            <li>
+              <Pill
+                text={experience_display}
+                className=" bg-white/20 backdrop-blur-md border border-white/30 text-gray-900 shadow-sm
+  [box-shadow:inset_1px_1px_2px_rgba(255,255,255,0.4)]"
+              />
+            </li>
           </ul>
         </div>
 

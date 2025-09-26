@@ -1,5 +1,10 @@
 // interfaces/index.ts
-import { EmptyStateVariant } from "@/types";
+import {
+  EmptyStateVariant,
+  ExperienceLevel,
+  ModeType,
+  SalaryCurrency,
+} from "@/types";
 
 // interfaces/Index.ts
 export interface PillProps {
@@ -78,12 +83,21 @@ export interface JobProps {
   title: string; // Job title (max 200 chars)
   description: string; // Job description
   company: CompanyProps; // Company details
-  salary?: string;
   location: string; // Job location (max 100 chars)
   posted_by: string; // User who posted the job (read-only from API)
   created_at: string; // ISO timestamp (read-only)
   updated_at: string; // ISO timestamp (read-only)
   is_active: boolean; // Job status (active/inactive)
+  experience: ExperienceLevel;
+  min_experience_years: number | null;
+  max_experience_years: number | null;
+  mode: ModeType;
+  salary: number | null;
+  salary_currency: SalaryCurrency;
+  category: string;
+  experience_display: string;
+  mode_display: string;
+  salary_currency_display: string;
 }
 
 export interface Filters {
