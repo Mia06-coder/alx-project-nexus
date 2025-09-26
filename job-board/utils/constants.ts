@@ -2,5 +2,5 @@
 export const NAV_LINKS = [
   { link: "Jobs", url: "/" },
   { link: "Saved Jobs", url: "/job/saved" },
-  { link: "My Applications", url: "/job/applied" },
+  { link: "My Applications", url: "/jobs/applied" },
 ];
