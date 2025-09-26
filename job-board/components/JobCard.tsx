@@ -20,7 +20,7 @@ export default function JobCard({
     <>
       {/* Glass card */}
       <article
-        className="relative z-10 shrink-0 w-65 overflow-hidden rounded-2xl bg-white backdrop-blur-xl border border-gray-200 shadow-lg shadow-black/30
+        className="relative z-10 shrink-0 min-w-65 overflow-hidden rounded-2xl bg-white backdrop-blur-xl border border-gray-200 shadow-lg shadow-black/30
         [box-shadow:inset_1px_1px_2px_rgba(255,255,255,0.3)]
       "
         aria-labelledby="job-title"
@@ -32,7 +32,7 @@ export default function JobCard({
           <div className="flex justify-between items-center">
             <span className="text-sm font-semibold opacity-90">$120/hr</span>
             <Button
-              className="opacity-70"
+              className="opacity-70 pr-0"
               aria-label="Save job for later"
               aria-pressed="false"
             >
@@ -43,7 +43,7 @@ export default function JobCard({
           <div className="flex items-center gap-2">
             <div className="relative w-8 h-8 rounded-full overflow-hidden bg-gray-100 flex items-center justify-center">
               <Image
-                src="/assets/images/nike-logo.png"
+                src="/assets/images/default-logo.png"
                 alt="Nike company logo"
                 className="object-contain "
                 fill
