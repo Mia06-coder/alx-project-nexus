@@ -8,12 +8,14 @@ import { useJobs } from "@/context/JobsContext";
 import { timeAgo } from "@/utils/timeAgo";
 import BackButton from "@/components/BackButton";
 import { useApplications } from "@/hooks/useApplications";
+import { useFavorites } from "@/hooks/useFavorites";
 
 export default function JobDetails() {
   const router = useRouter();
   const { id } = router.query;
   const { jobs, loading, error } = useJobs();
   const { appliedJobs } = useApplications();
+  const { addFavorite, favoriteJobs } = useFavorites();
   const [job, setJob] = useState<(typeof jobs)[0] | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -30,6 +32,7 @@ export default function JobDetails() {
   if (!job) return <p className="text-center py-20">Job not found</p>;
 
   const application = appliedJobs.find((a) => a.id === job.id);
+  const favorite = favoriteJobs.find((f) => f.id === job.id);
 
   return (
     <main className="max-w-5xl mx-auto px-6 pt-10 pb-20">
@@ -104,9 +107,19 @@ export default function JobDetails() {
             Apply Now
           </Button>
         )}
-        <Button className="border-2 border-[var(--primary)] text-[var(--primary)] flex-1">
-          Save
-        </Button>
+
+        {favorite ? (
+          <Button className="border-2 border-green-600 bg-green-600 text-white flex-1">
+            Saved
+          </Button>
+        ) : (
+          <Button
+            onClick={() => addFavorite(job.id)}
+            className="border-2 border-[var(--primary)] text-[var(--primary)] flex-1"
+          >
+            Save
+          </Button>
+        )}
       </div>
 
       <ApplicationModal

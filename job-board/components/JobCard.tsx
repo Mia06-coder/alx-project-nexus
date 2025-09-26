@@ -6,9 +6,14 @@ import Button from "./Button";
 import { JobProps } from "@/interfaces";
 import { timeAgo } from "@/utils/timeAgo";
 import { useRouter } from "next/router";
+import { FaBookmark } from "react-icons/fa6";
+import { useFavorites } from "@/hooks/useFavorites";
 
 export default function JobCard({ job }: { job: JobProps }) {
   const router = useRouter();
+  const { addFavorite, favoriteJobs } = useFavorites();
+  const favoriteJob = favoriteJobs.find((f) => f.id === job.id);
+
   return (
     <>
       {/* Glass card */}
@@ -31,13 +36,25 @@ export default function JobCard({ job }: { job: JobProps }) {
             ) : (
               <span></span>
             )}
-            <Button
-              className="opacity-70 pr-0"
-              aria-label="Save job for later"
-              aria-pressed="false"
-            >
-              <FaRegBookmark size={16} aria-hidden="true" />
-            </Button>
+
+            {favoriteJob ? (
+              <Button
+                className="pr-0"
+                aria-label="Saved job for later"
+                aria-pressed="true"
+              >
+                <FaBookmark size={16} aria-hidden="true" />
+              </Button>
+            ) : (
+              <Button
+                className="opacity-70 pr-0"
+                aria-label="Save job for later"
+                aria-pressed="false"
+                onClick={() => addFavorite(job.id)}
+              >
+                <FaRegBookmark size={16} aria-hidden="true" />
+              </Button>
+            )}
           </div>
           {/* Company logo + name + category + job title */}
           <div className="flex items-center gap-2">

@@ -47,7 +47,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
       const res = await fetch(`/api/favorites`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ job: jobId }),
+        body: JSON.stringify({ job_id: jobId }),
       });
       if (!res.ok) throw new Error("Failed to add favorite");
       const newFav = await res.json();
