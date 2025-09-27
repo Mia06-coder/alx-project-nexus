@@ -1,3 +1,4 @@
+// context/FavoritesContext.tsx
 import React, {
   createContext,
   useState,
@@ -6,7 +7,12 @@ import React, {
   useCallback,
   useEffect,
 } from "react";
-import { FavoritesContextType, FavoriteJob, JobProps } from "@/interfaces";
+import {
+  FavoritesContextType,
+  FavoriteJob,
+  JobProps,
+  NormalizedFavoriteJob,
+} from "@/interfaces";
 import { useJobs } from "./JobsContext";
 
 export const FavoritesContext = createContext<FavoritesContextType | undefined>(
@@ -15,25 +21,45 @@ export const FavoritesContext = createContext<FavoritesContextType | undefined>(
 
 export function FavoritesProvider({ children }: { children: ReactNode }) {
   const { jobs } = useJobs(); // All jobs from JobsContext
-  const [favorites, setFavorites] = useState<FavoriteJob[]>([]);
+  const [favorites, setFavorites] = useState<NormalizedFavoriteJob[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   // Fetch favorites from API
-  const fetchFavorites = useCallback(async (page?: number) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await fetch(`/api/favorites${page ? `?page=${page}` : ""}`);
-      if (!res.ok) throw new Error("Failed to fetch favorites");
-      const data = await res.json();
-      setFavorites(data.results || []);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const fetchFavorites = useCallback(
+    async (page?: number) => {
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await fetch(`/api/favorites${page ? `?page=${page}` : ""}`);
+        if (!res.ok) throw new Error("Failed to fetch favorites");
+        const data = await res.json();
+
+        const nomarlized: NormalizedFavoriteJob[] = (data.results || []).map(
+          (fav: FavoriteJob) => {
+            const matchedJob = jobs.find(
+              (job) =>
+                `${job.title} - ${job.company.name}`.toLowerCase() ===
+                (fav.job || "").toLowerCase()
+            );
+            return {
+              id: fav.id,
+              jobId: matchedJob ? matchedJob.id : -1,
+              user: fav.user,
+              created_at: fav.created_at,
+            };
+          }
+        );
+
+        setFavorites(nomarlized);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Something went wrong");
+      } finally {
+        setLoading(false);
+      }
+    },
+    [jobs]
+  );
 
   useEffect(() => {
     fetchFavorites();
@@ -51,7 +77,15 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
       });
       if (!res.ok) throw new Error("Failed to add favorite");
       const newFav = await res.json();
-      setFavorites((prev) => [...prev, newFav]);
+
+      const normalized: NormalizedFavoriteJob = {
+        id: newFav.id,
+        jobId,
+        user: newFav.user,
+        created_at: newFav.created_at,
+      };
+
+      setFavorites((prev) => [...prev, normalized]);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
@@ -60,33 +94,37 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
   }, []);
 
   // Remove favorite
-  const removeFavorite = useCallback(async (favoriteId: number) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const res = await fetch(`/api/favorites/${favoriteId}`, {
-        method: "DELETE",
-      });
-      if (!res.ok) throw new Error("Failed to remove favorite");
-      setFavorites((prev) => prev.filter((fav) => fav.id !== favoriteId));
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const removeFavorite = useCallback(
+    async (jobId: number) => {
+      const favorite = favorites.find((f) => f.jobId === jobId);
+      if (!favorite) return; // Not in favorites
+
+      setLoading(true);
+      setError(null);
+      try {
+        const res = await fetch(`/api/favorites/${favorite.id}`, {
+          method: "DELETE",
+        });
+        if (!res.ok) throw new Error("Failed to remove favorite");
+        setFavorites((prev) => prev.filter((fav) => fav.id !== favorite.id));
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Something went wrong");
+      } finally {
+        setLoading(false);
+      }
+    },
+    [favorites]
+  );
+
+  // Check if a job is favorited
+  const isFavorite = useCallback(
+    (jobId: number) => favorites.some((f) => f.jobId === jobId),
+    [favorites]
+  );
 
   // Compute full job details for favorites
   const favoriteJobs: JobProps[] = useMemo(() => {
-    return jobs.filter((job) =>
-      favorites.some((fav) => {
-        const jobString = `${job.title} - ${job.company.name}`
-          .trim()
-          .toLowerCase();
-        const favString = (fav.job || "").trim().toLowerCase();
-        return jobString === favString;
-      })
-    );
+    return jobs.filter((job) => favorites.some((fav) => fav.jobId === job.id));
   }, [favorites, jobs]);
 
   return (
@@ -99,6 +137,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
         fetchFavorites,
         addFavorite,
         removeFavorite,
+        isFavorite,
       }}
     >
       {children}

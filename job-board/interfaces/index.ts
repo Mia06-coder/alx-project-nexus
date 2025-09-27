@@ -153,12 +153,19 @@ export interface FavoriteJob {
   created_at: string;
 }
 
+export interface NormalizedFavoriteJob {
+  id: number;
+  jobId: number;
+  user: string;
+  created_at: string;
+}
 export interface FavoritesContextType {
-  favorites: FavoriteJob[];
+  favorites: NormalizedFavoriteJob[];
   favoriteJobs: JobProps[];
   loading: boolean;
   error: string | null;
   fetchFavorites: (page?: number) => Promise<void>;
   addFavorite: (jobId: number) => Promise<void>;
   removeFavorite: (favoriteId: number) => Promise<void>;
+  isFavorite: (jobId: number) => boolean;
 }
