@@ -56,7 +56,7 @@ export default function Carousel({
         onClick={() => scroll("left")}
         disabled={!canScrollLeft}
         aria-disabled={!canScrollLeft}
-        className={`absolute hidden sm:block -left-6 top-1/2 -translate-y-1/2 rounded-full p-2 z-15 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--primary)] ${
+        className={`absolute -left-6 top-1/2 -translate-y-1/2 rounded-full p-2 z-15 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--primary)] ${
           canScrollLeft
             ? "bg-black/60 hover:bg-black text-white shadow-md"
             : "bg-gray-300 text-gray-500 cursor-not-allowed opacity-50"
@@ -70,7 +70,7 @@ export default function Carousel({
         onClick={() => scroll("right")}
         disabled={!canScrollRight}
         aria-disabled={!canScrollRight}
-        className={`absolute hidden sm:block -right-6 top-1/2 -translate-y-1/2 rounded-full p-2 z-15 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--primary)] ${
+        className={`absolute -right-6 top-1/2 -translate-y-1/2 rounded-full p-2 z-15 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--primary)] ${
           canScrollRight
             ? "bg-black/60 hover:bg-black text-white shadow-md"
             : "bg-gray-300 text-gray-500 cursor-not-allowed opacity-50"

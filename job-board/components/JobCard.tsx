@@ -18,7 +18,7 @@ export default function JobCard({ job }: { job: JobProps }) {
     <>
       {/* Glass card */}
       <article
-        className="relative z-10 shrink-0 min-w-65 overflow-hidden rounded-2xl bg-white backdrop-blur-xl border border-gray-200 shadow-lg shadow-black/30
+        className="flex-1 basis-72 max-w-sm shrink-0 overflow-hidden rounded-2xl bg-white backdrop-blur-xl border border-gray-200 shadow-lg shadow-black/30
         [box-shadow:inset_1px_1px_2px_rgba(255,255,255,0.3)]
       "
         aria-labelledby="job-title"
@@ -39,11 +39,11 @@ export default function JobCard({ job }: { job: JobProps }) {
 
             {favoriteJob ? (
               <Button
-                className="pr-0"
+                className="pr-0 text-[var(--accent)]"
                 aria-label="Saved job for later"
                 aria-pressed="true"
               >
-                <FaBookmark size={16} aria-hidden="true" />
+                <FaBookmark size={24} aria-hidden="true" />
               </Button>
             ) : (
               <Button
@@ -52,7 +52,7 @@ export default function JobCard({ job }: { job: JobProps }) {
                 aria-pressed="false"
                 onClick={() => addFavorite(job.id)}
               >
-                <FaRegBookmark size={16} aria-hidden="true" />
+                <FaRegBookmark size={24} aria-hidden="true" />
               </Button>
             )}
           </div>

@@ -64,7 +64,7 @@ export default function Home() {
         {/* Recently Posted */}
         <Carousel title="Recently Posted" ariaLabel="recent job postings">
           {jobs.slice(0, 10).map((job) => (
-            <li key={`recent-${job.id}`}>
+            <li key={`recent-${job.id}`} className="flex">
               <JobCard job={job} />
             </li>
           ))}
@@ -73,7 +73,7 @@ export default function Home() {
         {/* Featured Jobs */}
         <Carousel title="Featured Jobs" ariaLabel="featured job postings">
           {featuredJobs.map((job) => (
-            <li key={`popular-${job.id}`}>
+            <li key={`popular-${job.id}`} className="flex">
               <JobCard job={job} />
             </li>
           ))}
