@@ -52,7 +52,7 @@ export default function Header() {
             />
           </button>
 
-          <Link href="/">
+          <Link href="/jobs">
             <h1 className="text-xl font-bold cursor-pointer">JobBoardX</h1>
           </Link>
         </div>
@@ -125,7 +125,7 @@ export default function Header() {
                   Profile & Settings
                 </Link>
                 <Link
-                  href="#"
+                  href="/"
                   role="menuitem"
                   className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:bg-gray-100"
                 >

@@ -1,101 +1,42 @@
 // pages/index.tsx
 import Button from "@/components/Button";
-import Carousel from "@/components/Carousel";
-import FilterDrawer from "@/components/FilterDrawer";
-import JobCard from "@/components/JobCard";
 import PageHeader from "@/components/PageHeader";
-import SearchBar from "@/components/SearchBar";
-import { useJobs } from "@/context/JobsContext";
-import { useState } from "react";
-import { FaSliders } from "react-icons/fa6";
+import { useRouter } from "next/router";
 
-export default function Home() {
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const { jobs, featuredJobs, loading, error } = useJobs();
-
-  if (loading) {
-    return (
-      <p className="flex justify-center items-center min-h-screen text-center font-black">
-        Loading jobs...
-      </p>
-    );
-  }
-
-  if (error) {
-    return (
-      <p
-        className="flex justify-center items-center min-h-screen text-center text-red-500"
-        role="alert"
-      >
-        {error}
-      </p>
-    );
-  }
-
-  if (jobs.length === 0) {
-    return (
-      <p
-        className="flex justify-center items-center min-h-screen text-center text-gray-600"
-        role="status"
-      >
-        No jobs available right now.
-      </p>
-    );
-  }
+export default function Landing() {
+  const router = useRouter();
 
   return (
-    <>
-      <div className="px-6 py-20 container mx-auto">
-        {/* Header */}
-        <PageHeader
-          title="Browse Jobs"
-          subtitle="Find your next opportunity among thousands of openings."
-        />
+    <div className="min-h-screen flex flex-col justify-center items-center px-6 py-20 container mx-auto text-center">
+      {/* Hero Header */}
+      <PageHeader
+        title="🚀 Welcome to JobBoardX"
+        subtitle="Your gateway to endless career opportunities."
+      />
 
-        {/* Search + Filter */}
-        <div className="mx-auto mt-6 flex justify-center items-center gap-2">
-          <SearchBar />
+      {/* Short tagline */}
+      <p className="mt-4 text-gray-600 max-w-lg">
+        Discover jobs tailored to your skills. Connect with top companies and
+        take the next step in your career journey.
+      </p>
 
-          <Button onClick={() => setDrawerOpen(true)} aria-label="Open filters">
-            <FaSliders size={20} />
-          </Button>
-        </div>
-
-        {/* Recently Posted */}
-        <Carousel title="Recently Posted" ariaLabel="recent job postings">
-          {jobs.slice(0, 10).map((job) => (
-            <li key={`recent-${job.id}`} className="flex">
-              <JobCard job={job} />
-            </li>
-          ))}
-        </Carousel>
-
-        {/* Featured Jobs */}
-        <Carousel title="Featured Jobs" ariaLabel="featured job postings">
-          {featuredJobs.map((job) => (
-            <li key={`popular-${job.id}`} className="flex">
-              <JobCard job={job} />
-            </li>
-          ))}
-        </Carousel>
-
-        {/* Browse All */}
-        <div className="flex justify-center mt-12">
-          <Button
-            type="button"
-            onClick={() => (window.location.href = "/jobs")}
-            className="border-2 border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)] hover:text-white"
-          >
-            Browse All Jobs
-          </Button>
-        </div>
-
-        {/* Filter Drawer */}
-        <FilterDrawer
-          isOpen={drawerOpen}
-          onClose={() => setDrawerOpen(false)}
-        />
+      {/* Actions */}
+      <div className="flex justify-center mt-12 gap-4">
+        <Button
+          type="button"
+          onClick={() => router.push("/login")}
+          className="px-8 py-3 border-2 border-blue-600 bg-blue-600 text-white font-semibold hover:bg-blue-700 transition"
+        >
+          Login
+        </Button>
+        <Button
+          type="button"
+          onClick={() => router.push("/register")}
+          className="px-8 py-3 border-2 border-blue-600 text-blue-600 font-semibold hover:bg-blue-600 hover:text-white transition"
+        >
+          Register
+        </Button>
       </div>
-    </>
+    </div>
   );
 }

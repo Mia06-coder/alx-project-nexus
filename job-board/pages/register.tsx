@@ -1,7 +1,9 @@
+// pages/register.tsx
 import AuthLayout from "@/components/AuthLayout";
 import Button from "@/components/Button";
 import PasswordInput from "@/components/PasswordInput";
 import { inputStyle, labelStyle } from "@/styles/styles";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 export default function Register() {
@@ -13,6 +15,8 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const router = useRouter();
+
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     console.log("Register:", {
@@ -23,6 +27,9 @@ export default function Register() {
       confirmPassword,
       role: "user",
     });
+
+    router.push("/jobs");
+
     // TODO: call /api/register
   }
 

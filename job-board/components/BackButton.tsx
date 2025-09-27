@@ -9,7 +9,7 @@ export default function BackButton() {
     if (window.history.length > 1) {
       router.back(); // works if there's a previous route in history
     } else {
-      router.push("/jobs"); // fallback route
+      router.push("/jobs/browse"); // fallback route
     }
   };
 

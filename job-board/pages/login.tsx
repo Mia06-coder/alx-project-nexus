@@ -1,16 +1,24 @@
+// pages/login.tsx
 import { useState } from "react";
 import { labelStyle, inputStyle } from "@/styles/styles";
 import PasswordInput from "@/components/PasswordInput";
 import Button from "@/components/Button";
 import AuthLayout from "@/components/AuthLayout";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const router = useRouter();
+
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     console.log("Login:", { username, password });
+
+    router.push("/jobs");
+
     // TODO: call /api/login
   }
 
@@ -51,9 +59,9 @@ export default function Login() {
             <input type="checkbox" className="rounded text-blue-600" />
             Remember me
           </label>
-          <a href="#" className="text-blue-600 hover:underline">
+          <Link href="#" className="text-blue-600 hover:underline">
             Forgot password?
-          </a>
+          </Link>
         </div>
 
         <Button
