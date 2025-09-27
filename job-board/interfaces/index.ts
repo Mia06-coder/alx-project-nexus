@@ -169,3 +169,11 @@ export interface FavoritesContextType {
   removeFavorite: (favoriteId: number) => Promise<void>;
   isFavorite: (jobId: number) => boolean;
 }
+
+export interface SEOProps {
+  title?: string;
+  description?: string;
+  keywords?: string;
+  ogImage?: string;
+  url?: string;
+}

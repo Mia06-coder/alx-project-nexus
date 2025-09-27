@@ -5,6 +5,7 @@ import { JobsProvider } from "@/context/JobsContext";
 import { ApplicationProvider } from "@/context/ApplicationContext";
 import { FavoritesProvider } from "@/context/FavoritesContext";
 import { useRouter } from "next/router";
+import SEO from "@/components/SEO";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -14,12 +15,16 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       {hideLayout ? (
-        <Component {...pageProps} />
+        <>
+          <SEO />
+          <Component {...pageProps} />
+        </>
       ) : (
         <JobsProvider>
           <ApplicationProvider>
             <FavoritesProvider>
               <Layout>
+                <SEO />
                 <Component {...pageProps} />
               </Layout>
             </FavoritesProvider>

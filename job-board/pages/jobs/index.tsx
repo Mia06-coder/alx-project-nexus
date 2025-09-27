@@ -5,7 +5,9 @@ import FilterDrawer from "@/components/FilterDrawer";
 import JobCard from "@/components/JobCard";
 import PageHeader from "@/components/PageHeader";
 import SearchBar from "@/components/SearchBar";
+import SEO from "@/components/SEO";
 import { useJobs } from "@/context/JobsContext";
+import { DOMAIN } from "@/utils/constants";
 import { useState } from "react";
 import { FaSliders } from "react-icons/fa6";
 
@@ -45,6 +47,12 @@ export default function Home() {
 
   return (
     <>
+      <SEO
+        title="Browse Jobs | JobBoardX"
+        description="Discover the latest job opportunities across industries. Filter, search, and apply to jobs directly on JobBoardX."
+        url={`${DOMAIN}/jobs`}
+      />
+
       <div className="px-6 py-20 container mx-auto">
         {/* Header */}
         <PageHeader
@@ -83,7 +91,7 @@ export default function Home() {
         <div className="flex justify-center mt-12">
           <Button
             type="button"
-            onClick={() => (window.location.href = "/jobs")}
+            onClick={() => (window.location.href = "/jobs/browse")}
             className="border-2 border-[var(--primary)] text-[var(--primary)] hover:bg-[var(--primary)] hover:text-white"
           >
             Browse All Jobs

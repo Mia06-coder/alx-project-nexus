@@ -4,7 +4,9 @@ import FilterDrawer from "@/components/FilterDrawer";
 import JobsSection from "@/components/JobsSection";
 import PageHeader from "@/components/PageHeader";
 import SearchBar from "@/components/SearchBar";
+import SEO from "@/components/SEO";
 import { useJobs } from "@/context/JobsContext";
+import { DOMAIN } from "@/utils/constants";
 import React, { useState } from "react";
 import { FaSliders } from "react-icons/fa6";
 
@@ -33,6 +35,12 @@ export default function JobsPage() {
   }
   return (
     <>
+      <SEO
+        title="Browse Job Categories | JobBoardX"
+        description="Explore jobs by category, industry, or role. Find your perfect match and apply directly on JobBoardX."
+        url={`${DOMAIN}/browse`}
+      />
+
       <div className="px-6 py-20 container mx-auto">
         {/* Header */}
         <PageHeader

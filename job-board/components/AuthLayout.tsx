@@ -10,7 +10,7 @@ export default function AuthLayout({
   const isLogin = router.pathname === "/login";
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-10">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-6">
         {/* Toggle */}
         <div className="flex justify-center mb-6">

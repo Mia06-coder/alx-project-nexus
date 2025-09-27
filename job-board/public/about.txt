@@ -1,0 +1,6 @@
+This favicon was generated using the following font:
+
+- Font Title: Bitcount Single
+- Font Author: undefined
+- Font Source: https://fonts.gstatic.com/s/bitcountsingle/v1/or25Q6T72-iP2RY6OLSkb95a817cjULDyyhvb6tTxCxtAOObpH9NnfLjSWiXv_OGqtjRD0BNzrItMZWC-9SK8R6EpA2l9RAyOs8BbxT7gd3xw8jKCotYzXjwevWm.ttf
+- Font License: undefined)

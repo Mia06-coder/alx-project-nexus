@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jobboardx-mia06-coders-projects.vercel.app/sitemap.xml
