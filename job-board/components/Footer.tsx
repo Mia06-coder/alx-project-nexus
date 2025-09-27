@@ -31,7 +31,7 @@ export default function Footer() {
                   className="hover:text-white focus:outline-none focus:ring-2 focus:ring-[var(--primary)] rounded"
                   aria-label="Visit our Twitter"
                 >
-                  <FaTwitterSquare className="w-6 h-6" />
+                  <FaTwitterSquare size={32} />
                 </Link>
               </li>
               <li>
@@ -42,7 +42,7 @@ export default function Footer() {
                   className="hover:text-white focus:outline-none focus:ring-2 focus:ring-[var(--primary)] rounded"
                   aria-label="Visit our LinkedIn"
                 >
-                  <FaLinkedin className="w-6 h-6" />
+                  <FaLinkedin size={32} />
                 </Link>
               </li>
             </ul>

@@ -18,7 +18,7 @@ export default function JobCard({ job }: { job: JobProps }) {
     <>
       {/* Glass card */}
       <article
-        className="flex-1 basis-72 max-w-sm shrink-0 overflow-hidden rounded-2xl bg-white backdrop-blur-xl border border-gray-200 shadow-lg shadow-black/30
+        className="relative flex-1 basis-72 max-w-sm shrink-0 overflow-hidden rounded-2xl bg-white backdrop-blur-xl border border-gray-200 shadow-lg shadow-black/30
         [box-shadow:inset_1px_1px_2px_rgba(255,255,255,0.3)]
       "
         aria-labelledby="job-title"
