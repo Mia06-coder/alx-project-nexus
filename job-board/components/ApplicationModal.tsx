@@ -4,6 +4,7 @@ import "react-phone-number-input/style.css";
 import { ApplicationModalProps } from "@/interfaces";
 import Button from "./Button";
 import { useApplications } from "@/hooks/useApplications";
+import { inputStyle, labelStyle } from "@/styles/styles";
 
 export default function ApplicationModal({
   isOpen,
@@ -18,9 +19,6 @@ export default function ApplicationModal({
   const [successMsg, setSuccessMsg] = useState("");
 
   const { applyToJob } = useApplications();
-
-  const labelStyle = "block text-sm font-medium";
-  const inputStyle = "mt-1 w-full rounded-lg border p-2";
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
