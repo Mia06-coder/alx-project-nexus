@@ -24,10 +24,34 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
   const [favorites, setFavorites] = useState<NormalizedFavoriteJob[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [lastFetchedAt, setLastFetchedAt] = useState<number | null>(null);
 
-  // Fetch favorites from API
+  // Load from sessionStorage on mount
+  useEffect(() => {
+    const stored = sessionStorage.getItem("favorites");
+    if (stored) {
+      setFavorites(JSON.parse(stored));
+      setLoading(false); // don’t block UI if we already have cached favorites
+    }
+    fetchFavorites(); // still sync with server
+  }, []);
+
+  // Save to sessionStorage whenever favorites change
+  useEffect(() => {
+    sessionStorage.setItem("favorites", JSON.stringify(favorites));
+  }, [favorites]);
+
+  // Fetch favorites from API (with optional force refresh)
   const fetchFavorites = useCallback(
-    async (page?: number) => {
+    async (page?: number, force = false) => {
+      if (
+        !force &&
+        lastFetchedAt &&
+        Date.now() - lastFetchedAt < 5 * 60 * 1000
+      ) {
+        return; // skip if data is fresh (<5min old)
+      }
+
       setLoading(true);
       setError(null);
       try {
@@ -52,23 +76,31 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
         );
 
         setFavorites(nomarlized);
+        setLastFetchedAt(Date.now());
       } catch (err) {
         setError(err instanceof Error ? err.message : "Something went wrong");
       } finally {
         setLoading(false);
       }
     },
-    [jobs]
+    [jobs, lastFetchedAt]
   );
 
   useEffect(() => {
     fetchFavorites();
   }, [fetchFavorites]);
 
-  // Add favorite
+  // Optimistic add favorite
   const addFavorite = useCallback(async (jobId: number) => {
-    setLoading(true);
-    setError(null);
+    const tempId = Date.now(); // temporary ID
+    const optimistic: NormalizedFavoriteJob = {
+      id: tempId,
+      jobId,
+      user: "me", // or current user id if available
+      created_at: new Date().toISOString(),
+    };
+    setFavorites((prev) => [...prev, optimistic]);
+
     try {
       const res = await fetch(`/api/favorites`, {
         method: "POST",
@@ -88,29 +120,29 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
       setFavorites((prev) => [...prev, normalized]);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
-    } finally {
-      setLoading(false);
+      // Rollback
+      setFavorites((prev) => prev.filter((fav) => fav.id !== tempId));
     }
   }, []);
 
-  // Remove favorite
+  // Optimistic remove favorite
   const removeFavorite = useCallback(
     async (jobId: number) => {
       const favorite = favorites.find((f) => f.jobId === jobId);
       if (!favorite) return; // Not in favorites
 
-      setLoading(true);
-      setError(null);
+      // Optimistic update
+      setFavorites((prev) => prev.filter((fav) => fav.id !== favorite.id));
+
       try {
         const res = await fetch(`/api/favorites/${favorite.id}`, {
           method: "DELETE",
         });
         if (!res.ok) throw new Error("Failed to remove favorite");
-        setFavorites((prev) => prev.filter((fav) => fav.id !== favorite.id));
       } catch (err) {
         setError(err instanceof Error ? err.message : "Something went wrong");
-      } finally {
-        setLoading(false);
+        // Rollback
+        setFavorites((prev) => [...prev, favorite]);
       }
     },
     [favorites]
