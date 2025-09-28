@@ -56,7 +56,7 @@ export default function Home() {
         {/* Recently Posted */}
         <Carousel title="Recently Posted" ariaLabel="recent job postings">
           {jobs.slice(0, 10).map((job) => (
-            <li key={`recent-${job.id}`} className="flex">
+            <li key={`recent-${job.id}`} className="shrink-0 basis-72 max-w-sm">
               <JobCard job={job} />
             </li>
           ))}
