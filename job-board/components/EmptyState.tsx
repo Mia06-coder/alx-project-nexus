@@ -38,6 +38,13 @@ const VARIANT_DATA: Record<
     description:
       "We couldn’t find any jobs that match your filters. Try broadening your search or adjusting your filters.",
   },
+  notFound: {
+    imageSrc: "/assets/illustrations/not-found.svg",
+    imageAlt: "Illustration showing error 404",
+    heading: "Page Not Found",
+    description:
+      "The page you’re looking for doesn’t exist or may have been moved. Please check the URL or return to the homepage.",
+  },
 };
 
 export default function EmptyState({

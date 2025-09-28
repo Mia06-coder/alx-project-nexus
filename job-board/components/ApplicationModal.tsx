@@ -1,6 +1,6 @@
 import { FormEvent, useState } from "react";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
-import "react-phone-number-input/style.css";
+import { useDropzone } from "react-dropzone";
 import { ApplicationModalProps } from "@/interfaces";
 import Button from "./Button";
 import { useApplications } from "@/hooks/useApplications";
@@ -11,7 +11,7 @@ export default function ApplicationModal({
   onClose,
   job,
 }: ApplicationModalProps) {
-  const [resume, setResume] = useState("");
+  const [resume, setResume] = useState<File | null>(null);
   const [why, setWhy] = useState("");
   const [charCount, setCharCount] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -19,6 +19,22 @@ export default function ApplicationModal({
   const [successMsg, setSuccessMsg] = useState("");
 
   const { applyToJob } = useApplications();
+
+  // File upload
+  const onDrop = (acceptedFiles: File[]) => {
+    if (acceptedFiles.length > 0) {
+      setResume(acceptedFiles[0]);
+    }
+  };
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    accept: {
+      "application/pdf": [".pdf"],
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+        [".docx"],
+    },
+    multiple: false,
+    onDrop,
+  });
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -47,8 +63,8 @@ export default function ApplicationModal({
       console.log(`Data: ${data}`);
 
       setSuccessMsg("Application submitted successfully!");
-      applyToJob(job.id, resume, why); // update context
-      setResume("");
+      applyToJob(job.id, JSON.stringify(resume), why); // update context
+      setResume(null);
       setWhy("");
       onClose(); // close modal on success
     } catch (err) {
@@ -76,12 +92,21 @@ export default function ApplicationModal({
                 Upload Resume (PDF or Docx)
                 <span className="text-red-500">*</span>
               </label>
-              <input
-                className={inputStyle}
-                placeholder="Resume uri"
-                value={resume}
-                onChange={(e) => setResume(e.target.value)}
-              />
+              <div
+                {...getRootProps()}
+                className={`mt-2 flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed p-6 text-center ${
+                  isDragActive
+                    ? "border-blue-500 bg-blue-50"
+                    : "border-gray-300"
+                }`}
+              >
+                <input {...getInputProps()} required />
+                <p className="text-sm text-gray-600">
+                  {resume
+                    ? resume.name
+                    : "Drag & drop your resume here, or click to browse files"}
+                </p>
+              </div>
             </div>
 
             {/* Why Interested */}
