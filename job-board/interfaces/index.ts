@@ -164,7 +164,7 @@ export interface FavoritesContextType {
   favoriteJobs: JobProps[];
   loading: boolean;
   error: string | null;
-  fetchFavorites: (page?: number) => Promise<void>;
+  fetchFavorites: (page?: number, force?: boolean) => Promise<void>;
   addFavorite: (jobId: number) => Promise<void>;
   removeFavorite: (favoriteId: number) => Promise<void>;
   isFavorite: (jobId: number) => boolean;

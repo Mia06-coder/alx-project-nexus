@@ -1,6 +1,7 @@
 import Button from "@/components/Button";
 import JobsSection from "@/components/JobsSection";
 import SEO from "@/components/SEO";
+import Spinner from "@/components/Spinner";
 import { useFavorites } from "@/hooks/useFavorites";
 import { DOMAIN } from "@/utils/constants";
 import React, { useState } from "react";
@@ -9,13 +10,7 @@ export default function FavoriteJobs() {
   const { favoriteJobs, loading, error } = useFavorites();
   const [visibleCount, setVisibleCount] = useState(10); // initially show 10 jobs
 
-  if (loading) {
-    return (
-      <p className="flex justify-center items-center min-h-screen text-center font-black">
-        Loading jobs...
-      </p>
-    );
-  }
+  if (loading) return <Spinner />;
 
   if (error) {
     return (

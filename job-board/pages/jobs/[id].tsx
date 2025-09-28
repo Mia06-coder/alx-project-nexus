@@ -11,6 +11,7 @@ import { useApplications } from "@/hooks/useApplications";
 import { useFavorites } from "@/hooks/useFavorites";
 import SEO from "@/components/SEO";
 import { DOMAIN } from "@/utils/constants";
+import Spinner from "@/components/Spinner";
 
 function formatDate(date: string) {
   return new Date(date).toLocaleDateString("en-GB", {
@@ -37,7 +38,7 @@ export default function JobDetails() {
     }
   }, [jobs, id]);
 
-  if (loading) return <p className="text-center py-20">Loading job...</p>;
+  if (loading) return <Spinner />;
   if (error) return <p className="text-center py-20 text-red-500">{error}</p>;
   if (!job) return <p className="text-center py-20">Job not found</p>;
 
