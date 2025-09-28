@@ -5,6 +5,7 @@ import JobsSection from "@/components/JobsSection";
 import PageHeader from "@/components/PageHeader";
 import SearchBar from "@/components/SearchBar";
 import SEO from "@/components/SEO";
+import Spinner from "@/components/Spinner";
 import { useJobs } from "@/context/JobsContext";
 import { DOMAIN } from "@/utils/constants";
 import React, { useState } from "react";
@@ -15,13 +16,7 @@ export default function JobsPage() {
   const { filteredJobs, loading, error } = useJobs();
   const [visibleCount, setVisibleCount] = useState(10); // initially show 10 jobs
 
-  if (loading) {
-    return (
-      <p className="flex justify-center items-center min-h-screen text-center font-black">
-        Loading jobs...
-      </p>
-    );
-  }
+  if (loading) return <Spinner />;
 
   if (error) {
     return (

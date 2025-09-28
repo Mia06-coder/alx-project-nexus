@@ -22,6 +22,7 @@ export function JobsProvider({ children }: { children: ReactNode }) {
   const [experienceLvls, setExperienceLvls] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [lastFetchedAt, setLastFetchedAt] = useState<number | null>(null);
 
   const [filters, setFilters] = useState<Filters>({
     location: null,
@@ -30,8 +31,15 @@ export function JobsProvider({ children }: { children: ReactNode }) {
     experienceLvl: null,
   });
 
-  async function fetchAllJobs() {
-    setLoading(true);
+  // Helper: signature for lightweight comparison
+  function getJobsSignature(jobs: JobProps[]) {
+    return jobs.map((job) => job.id + "-" + job.updated_at).join("|");
+  }
+
+  // Main fetch function
+  async function fetchAllJobs(showLoading = true) {
+    if (showLoading) setLoading(true);
+
     let allJobs: JobProps[] = [];
     let page = 1;
     let hasNext = true;
@@ -51,36 +59,47 @@ export function JobsProvider({ children }: { children: ReactNode }) {
         }
       }
 
-      setJobs(allJobs);
-      setFilteredJobs(allJobs);
+      // Compare signatures before updating state
+      const newSignature = getJobsSignature(allJobs);
+      const oldSignature = getJobsSignature(jobs);
 
-      const uniqueLocations = [
-        ...new Set(allJobs.map((job: JobProps) => job.location)),
-      ];
-      const uniqueCompanies = [
-        ...new Set(allJobs.map((job: JobProps) => job.company.name)),
-      ];
+      if (newSignature !== oldSignature) {
+        setJobs(allJobs);
+        setFilteredJobs(allJobs);
+        setLastFetchedAt(Date.now());
 
-      setLocations(uniqueLocations);
-      setCompanies(uniqueCompanies);
-      setCategories([...CATEGORIES]);
-      setExperienceLvls([...EXPERIENCE_LEVELS]);
+        // cache in sessionStorage
+        sessionStorage.setItem("allJobs", JSON.stringify(allJobs));
 
-      // Handle featured jobs (session cached)
-      const storedFeatured = sessionStorage.getItem("featuredJobs");
-      if (storedFeatured) {
-        setFeaturedJobs(JSON.parse(storedFeatured));
-      } else {
-        const featured = getRandomJobs(allJobs, 5);
-        setFeaturedJobs(featured);
-        sessionStorage.setItem("featuredJobs", JSON.stringify(featured));
+        // update filters data
+        const uniqueLocations = [
+          ...new Set(allJobs.map((job: JobProps) => job.location)),
+        ];
+        const uniqueCompanies = [
+          ...new Set(allJobs.map((job: JobProps) => job.company.name)),
+        ];
+
+        setLocations(uniqueLocations);
+        setCompanies(uniqueCompanies);
+        setCategories([...CATEGORIES]);
+        setExperienceLvls([...EXPERIENCE_LEVELS]);
+
+        // Handle featured jobs (session cached)
+        const storedFeatured = sessionStorage.getItem("featuredJobs");
+        if (storedFeatured) {
+          setFeaturedJobs(JSON.parse(storedFeatured));
+        } else {
+          const featured = getRandomJobs(allJobs, 5);
+          setFeaturedJobs(featured);
+          sessionStorage.setItem("featuredJobs", JSON.stringify(featured));
+        }
       }
 
       setError(null);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
-      setLoading(false);
+      if (showLoading) setLoading(false);
     }
   }
 
@@ -134,12 +153,39 @@ export function JobsProvider({ children }: { children: ReactNode }) {
     setFilteredJobs(jobs);
   }
 
+  // EEffects
   useEffect(() => {
-    fetchAllJobs();
+    // Hydrate from cache first for instant UI
+    const cached = sessionStorage.getItem("allJobs");
+    if (cached) {
+      const parsed = JSON.parse(cached);
+      setJobs(parsed);
+      setFilteredJobs(parsed);
+      setLoading(false);
+    }
 
-    // periodic refresh every 5 mins
-    const interval = setInterval(() => fetchAllJobs(), 5 * 60 * 1000);
-    return () => clearInterval(interval);
+    fetchAllJobs(); // fetch fresh data
+
+    // Periodic refresh every 5 mins, only if tab is visible
+    const interval = setInterval(() => {
+      if (document.visibilityState === "visible") {
+        fetchAllJobs(false); //silent background refresh
+      }
+    }, 5 * 60 * 1000);
+
+    // Refresh immediatelywhen tab becomes active again
+    function handleVisibilityChange() {
+      if (document.visibilityState === "visible") {
+        fetchAllJobs(false);
+      }
+    }
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
   }, []);
 
   return (

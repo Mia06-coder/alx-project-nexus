@@ -60,7 +60,6 @@ export default function ApplicationModal({
 
       if (!res.ok) throw new Error("Failed to submit application");
       const data = await res.json();
-      console.log(`Data: ${data}`);
 
       setSuccessMsg("Application submitted successfully!");
       applyToJob(job.id, JSON.stringify(resume), why); // update context

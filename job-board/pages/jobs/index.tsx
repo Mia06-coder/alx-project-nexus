@@ -6,6 +6,7 @@ import JobCard from "@/components/JobCard";
 import PageHeader from "@/components/PageHeader";
 import SearchBar from "@/components/SearchBar";
 import SEO from "@/components/SEO";
+import Spinner from "@/components/Spinner";
 import { useJobs } from "@/context/JobsContext";
 import { DOMAIN } from "@/utils/constants";
 import { useState } from "react";
@@ -15,13 +16,7 @@ export default function Home() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const { jobs, featuredJobs, loading, error } = useJobs();
 
-  if (loading) {
-    return (
-      <p className="flex justify-center items-center min-h-screen text-center font-black">
-        Loading jobs...
-      </p>
-    );
-  }
+  if (loading) return <Spinner />;
 
   if (error) {
     return (

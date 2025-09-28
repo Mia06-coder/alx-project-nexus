@@ -13,7 +13,6 @@ export default function JobsSection({
   variant,
   showCount = false,
 }: JobsSectionProps) {
-  console.log(sectionJobs);
   return (
     <>
       <section aria-labelledby={`${id}-title`} className="max-w-6xl mx-auto">
