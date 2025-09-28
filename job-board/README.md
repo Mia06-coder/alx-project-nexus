@@ -6,7 +6,9 @@ The platform connects **job seekers** with **employers**, offering an accessible
 
 ![Landing Page](/job-board/public/assets/images/screenshots/landing.png)
 
----
+![Job Details](/job-board/public/assets/images/screenshots/applied.png)
+
+![404](/job-board/public/assets/images/screenshots/not-found.png)
 
 ## Features
 
@@ -61,28 +63,29 @@ The platform connects **job seekers** with **employers**, offering an accessible
 
 ---
 
-## Setup & Installation
+## API Endpoints
 
-1. Clone the repository:
+### Jobs
 
-   ```bash
-   git clone https://github.com/Mia06-coder/job-board.git
-   cd job-board
-   ```
+- `GET /api/jobs` → Fetch job listings
+- `GET /api/jobs/:id` → Fetch job details
+- `POST /api/jobs` → Create a new job (employer only)
 
-2. Install dependencies:
+### Applications
 
-   ```bash
-   npm install
-   ```
+- `POST /api/applications` → Submit application (resume + cover letter)
+- `GET /api/applications/:userId` → Fetch user applications
 
-3. Run the development server:
+### Favorites
 
-   ```bash
-   npm run dev
-   ```
+- `POST /api/favorites/:jobId` → Add to favorites
+- `DELETE /api/favorites/:jobId` → Remove from favorites
+- `GET /api/favorites` → Fetch user favorites
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+### Auth
+
+- `POST /api/register` → Register user
+- `POST /api/login` → Login user
 
 ---
 
@@ -98,17 +101,27 @@ The platform connects **job seekers** with **employers**, offering an accessible
 
 ---
 
-## Project Structure
+## Progress & Roadmap
 
-```bash
-.
-├── pages/          # Next.js pages
-├── components/     # Reusable UI components
-├── interfaces/
-├── styles/         # Global & Tailwind styles
-├── public/         # Static assets
-└── README.md       # Project documentation
-```
+### ✅ Completed
+
+- Job listings & details pages
+- Favorites system (with caching & optimistic UI)
+- API integration for jobs & reviews
+
+### 🚧 In Progress
+
+- Employer dashboards
+- Application tracking UI
+- Resume/Cover letter upload (validation)
+- Authentication (register/login)
+
+### 🔜 Roadmap
+
+- AI-driven job recommendations
+- Advanced employer analytics
+- Mobile app version
+- Premium listings (monetization)
 
 ---
 
@@ -133,3 +146,5 @@ Made with ❤️ by **Mia Mudzingwa**
 
 - GitHub: [Mia06-coder](https://github.com/Mia06-coder)
 - LinkedIn: [mia-mudzingwa](https://www.linkedin.com/in/mia-mudzingwa)
+
+In collaboratin with [Ian Rioba](https://www.linkedin.com/in/rioba-ian-felix)

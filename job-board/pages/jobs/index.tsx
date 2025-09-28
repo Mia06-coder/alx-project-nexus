@@ -4,13 +4,11 @@ import Carousel from "@/components/Carousel";
 import FilterDrawer from "@/components/FilterDrawer";
 import JobCard from "@/components/JobCard";
 import PageHeader from "@/components/PageHeader";
-import SearchBar from "@/components/SearchBar";
 import SEO from "@/components/SEO";
 import Spinner from "@/components/Spinner";
 import { useJobs } from "@/context/JobsContext";
 import { DOMAIN } from "@/utils/constants";
 import { useState } from "react";
-import { FaSliders } from "react-icons/fa6";
 
 export default function Home() {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -54,15 +52,6 @@ export default function Home() {
           title="Browse Jobs"
           subtitle="Find your next opportunity among thousands of openings."
         />
-
-        {/* Search + Filter */}
-        <div className="mx-auto mt-6 flex justify-center items-center gap-2">
-          <SearchBar />
-
-          <Button onClick={() => setDrawerOpen(true)} aria-label="Open filters">
-            <FaSliders size={20} />
-          </Button>
-        </div>
 
         {/* Recently Posted */}
         <Carousel title="Recently Posted" ariaLabel="recent job postings">

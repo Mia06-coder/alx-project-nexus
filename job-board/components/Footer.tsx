@@ -76,6 +76,14 @@ export default function Footer() {
             >
               Mia Mudzingwa
             </Link>
+            {" & "}
+            <Link
+              href="https://www.linkedin.com/in/rioba-ian-felix"
+              target="blank"
+              className="text-white font-medium hover:underline hover:underline-offset-2"
+            >
+              Ian Rioba
+            </Link>
           </p>
         </div>
       </div>
