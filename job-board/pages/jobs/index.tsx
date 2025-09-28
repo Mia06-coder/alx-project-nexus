@@ -65,7 +65,10 @@ export default function Home() {
         {/* Featured Jobs */}
         <Carousel title="Featured Jobs" ariaLabel="featured job postings">
           {featuredJobs.map((job) => (
-            <li key={`popular-${job.id}`} className="flex">
+            <li
+              key={`popular-${job.id}`}
+              className="shrink-0 basis-72 max-w-sm"
+            >
               <JobCard job={job} />
             </li>
           ))}
